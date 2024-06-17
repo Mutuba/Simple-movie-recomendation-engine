@@ -10,7 +10,7 @@
           </tr>
         </thead>
         <tbody>
-          <% @user.recommendations.each do |movie, rating| %>
+          <% @user.movie_recommendations.each do |movie, rating| %>
             <tr>
               <td><%= movie.name %></td>
               <td><%= rating.round(2) %></td>

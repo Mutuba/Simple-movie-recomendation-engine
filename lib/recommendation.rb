@@ -1,5 +1,5 @@
 module Recommendation
-   def recommendations
+   def movie_recommendations
      other_users = self.class.where.not(id: self.id)
      self_movies = self.movies.to_set
  
