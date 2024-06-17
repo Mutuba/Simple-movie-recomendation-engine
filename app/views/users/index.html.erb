@@ -1,5 +1,14 @@
-<ul><h2>Select a user:</h2>
-  <% @users.each do |user| %>
-    <li><%= link_to user.name, user_path(user) %></li>
-  <% end %>
-</ul>
+<div class="container mt-5">
+  <h2 class="mb-4">Select a user to see the recommended movies:</h2>
+  <div class="card">
+    <div class="card-body">
+      <ul class="list-group">
+        <% @users.each do |user| %>
+          <li class="list-group-item list-group-item-action">
+            <%= link_to user.name, user_path(user), class: 'text-decoration-none' %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>
