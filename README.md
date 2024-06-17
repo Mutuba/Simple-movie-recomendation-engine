@@ -1,6 +1,6 @@
 # README
 
-**Collaborative filtering**
+# **Collaborative filtering**
 
 What is collaborative filtering?
 
@@ -19,3 +19,56 @@ Now we have a better understanding on how recommendation engines work. To implem
 6.  Associate each movie with its own weight in a hash. When different users liked a same movie, we accumulate the weight for that movie.
 7.  As you can see, the most recommended movie will have the highest weight (recommendation rating)!
 8.  Sort the hash by the weights in descending order and we are done!
+
+# Running the App
+
+This application uses Ruby version 3.2.2 To install, use rvm or rbenv.
+
+RVM
+
+`rvm install 3.2.2`
+
+`rvm use 3.2.2`
+
+- Rbenv
+
+`rbenv install 3.2.2`
+
+Bundler provides a consistent environment for Ruby projects by tracking and installing  
+the exact gems and versions that are needed. I recommend bundler version 2.0.2. To install:
+
+You need Rails. The rails version being used is rails version 7
+
+To install:
+
+`gem install rails -v '~> 7'`
+
+\*To get up and running with the project locally, follow the following steps.
+
+Clone the app
+
+With SSH
+
+`git@github.com:Mutuba/Simple-movie-recomendation-engine.git`
+
+- With HTTPS
+
+`https://github.com/Mutuba/Simple-movie-recomendation-engine.git`
+
+Move into the directory and install all the requirements.
+
+cd rails_url_shortener_app
+
+run `bundle install` to install application packages
+
+Run `rails db:create` to create a database for the application
+
+Run `rails db:migrate` to run database migrations and create database tables
+
+Run `rails db:seed` to seed the database with sample test data
+
+The application can be run by running the below command:-
+
+`rails s` or `rails server`
+
+See the app live!
