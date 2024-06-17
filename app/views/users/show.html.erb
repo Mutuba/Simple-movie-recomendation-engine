@@ -1,19 +1,23 @@
 <div class="container mt-5">
-  <h2 class="mb-4">Recommended Movies for <%= @user.name %>:</h2>
-  <table class="table table-striped table-bordered  table-hover">
-    <thead class="thead-dark">
-      <tr>
-        <th scope="col">Movie</th>
-        <th scope="col">Rating</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @user.recommend_movies.each do |key, value| %>
-      <tr>
-        <td><%= key.name %></td>
-        <td><%= value.round(2) %></td>
-      </tr>
-      <% end %>
-    </tbody>
-  </table>
+  <h2>Recommended Movies for <%= @user.name %>:</h2>
+  <div class="card mt-4">
+    <div class="card-body">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Movie</th>
+            <th>Rating</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @user.recommend_movies.each do |movie, rating| %>
+            <tr>
+              <td><%= movie.name %></td>
+              <td><%= rating.round(2) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
