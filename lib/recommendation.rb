@@ -78,7 +78,7 @@ module Recommendation
     # sorted_recommendations = item_recommendations.sort_by { |key, value| value }.reverse.take(results).to_h.keys
     sorted_recommendations = item_recommendations.keys.sort_by { |id| item_recommendations[id] }.reverse.take(results)
     
-    # construct table from meta data
+    # construct table from association_metadata
     association_table = self.class.reflect_on_association(self.class.association_metadata.reflection_name).klass
     # Fetch the recommendation objects and pair them with their recommendation scores
     sorted_recommendations.map { |id| [association_table.find(id), item_recommendations[id]] }
