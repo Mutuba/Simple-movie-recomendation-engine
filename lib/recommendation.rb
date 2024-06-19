@@ -68,7 +68,7 @@ module Recommendation
       weight = (jaccard_index + dice_sorensen_coefficient + collaborative_weight) / 3.0
 
       (instance_items - common_items).each do |item_id|
-        # Exclude items that are already liked by the user
+        # Exclude items that are already liked/added to preference list
         acc[item_id] += weight unless self_items.include?(item_id)
       end
       acc
@@ -76,12 +76,11 @@ module Recommendation
 
     # Returns an array of instance ids sorted by their weights in the item_recommendations similar to 
     # sorted_recommendations = item_recommendations.sort_by { |key, value| value }.reverse.take(results).to_h.keys
-
     sorted_recommendations = item_recommendations.keys.sort_by { |id| item_recommendations[id] }.reverse.take(results)
     
     # construct table from meta data
     association_table = self.class.reflect_on_association(self.class.association_metadata.reflection_name).klass
-     # Fetch the recommendation objects and pair them with their recommendation scores
-    movies_with_ratings = sorted_recommendations.map { |id| [association_table.find(id), item_recommendations[id]] }
+    # Fetch the recommendation objects and pair them with their recommendation scores
+    sorted_recommendations.map { |id| [association_table.find(id), item_recommendations[id]] }
   end
 end
