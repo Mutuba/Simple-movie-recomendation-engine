@@ -39,7 +39,7 @@ module Recommendation
         AssociationMetadata.new(
           reflection.name.to_s.pluralize,
           reflection.foreign_key,
-          nil ,# Adjust based on your needs
+          nil,
           reflection.name
         )
       else
