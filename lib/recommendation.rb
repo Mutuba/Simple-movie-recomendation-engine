@@ -5,7 +5,7 @@ module Recommendation
     extend ClassMethods
   end
 
-  AssociationMetadata = Struct.new(:join_table, :foreign_key, :association_foreign_key)
+  AssociationMetadata = Struct.new(:join_table, :foreign_key, :association_foreign_key, :reflection_name)
 
   module ClassMethods
     attr_accessor :association_metadata
@@ -25,19 +25,22 @@ module Recommendation
         AssociationMetadata.new(
           reflection.join_table,
           reflection.foreign_key,
-          reflection.association_foreign_key
+          reflection.association_foreign_key,
+          reflection.name
         )
       when ActiveRecord::Reflection::ThroughReflection
         AssociationMetadata.new(
           reflection.through_reflection.table_name,
           reflection.through_reflection.foreign_key,
-          reflection.association_foreign_key
+          reflection.association_foreign_key,
+          reflection.name
         )
       when ActiveRecord::Reflection::HasManyReflection
         AssociationMetadata.new(
           reflection.name.to_s.pluralize,
           reflection.foreign_key,
-          nil # Adjust based on your needs
+          nil ,# Adjust based on your needs
+          reflection.name
         )
       else
         raise ArgumentError, "Association '#{reflection.name}' is not a supported type"
@@ -48,8 +51,9 @@ module Recommendation
   def recommendations(results: 10)
     other_instances = self.class.where.not(id: id)
     self_items = send(self.class.association_metadata.join_table).pluck(self.class.association_metadata.association_foreign_key).to_set
-
+   
     item_recommendations = other_instances.reduce(Hash.new(0)) do |acc, instance|
+      # pick movie ids based off current user preferences into a set
       instance_items = instance.send(self.class.association_metadata.join_table).pluck(self.class.association_metadata.association_foreign_key).to_set
       common_items = instance_items & self_items
 
@@ -70,8 +74,14 @@ module Recommendation
       acc
     end
 
-    # Fetch the movie objects and pair them with their recommendation scores
-    movie_ids = item_recommendations.keys.sort_by { |id| item_recommendations[id] }.reverse.take(results)
-    movies_with_ratings = movie_ids.map { |id| [Movie.find(id), item_recommendations[id]] }
+    # Returns an array of instance ids sorted by their weights in the item_recommendations similar to 
+    # sorted_recommendations = item_recommendations.sort_by { |key, value| value }.reverse.take(results).to_h.keys
+
+    sorted_recommendations = item_recommendations.keys.sort_by { |id| item_recommendations[id] }.reverse.take(results)
+    
+    # construct table from meta data
+    association_table = self.class.reflect_on_association(self.class.association_metadata.reflection_name).klass
+     # Fetch the recommendation objects and pair them with their recommendation scores
+    movies_with_ratings = sorted_recommendations.map { |id| [association_table.find(id), item_recommendations[id]] }
   end
 end
