@@ -41,3 +41,63 @@ end
     user.movies << movie
   end
 end
+
+
+
+# given three tables, FriendDetails, PackageDetails and StudentDetails, with details as follows
+
+# StudentDetails
+
+# StudentId  StudentName
+
+
+# FriendDetails
+
+# StudentId  FriendId
+
+# PackageDetails
+
+# StudentId   Package
+
+# SELECT sd.StudentId AS StudentId, sd.StudentName AS StudentName, fd.FriendId AS FriendId, sf.StudentName AS FriendName FROM StudentDetails sd JOIN FriendDetails fd ON sd.StudentId = fd.StudentId JOIN StudentDetails sf ON sf.StudentId = fd.FrindId JOIN PackageDetails sp ON sp.StudentId = sd.StudentId JOIN PackageDetails fp ON fp.StudentId = fd.FriendId Where fp.Package > sp.Package 
+
+# Offer Query
+# SELECT
+#     sd.StudentId AS StudentId,
+#     sd.StudentName AS StudentName,
+#     fd.FriendId AS FriendId,
+#     sf.StudentName AS FriendName
+# FROM
+#     StudentDetails sd
+# JOIN
+#     FriendDetails fd ON sd.StudentId = fd.StudentId
+# JOIN
+#     StudentDetails sf ON fd.FriendId = sf.StudentId
+# JOIN
+#     PackageDetails sp ON sd.StudentId = sp.StudentId
+# JOIN
+#     PackageDetails fp ON fd.FriendId = fp.StudentId
+# WHERE
+#     fp.Package > sp.Package;
+
+# Salaries ranking
+# WITH RankedSalaries AS (
+#   SELECT 
+#       employee_id, 
+#       department_id, 
+#       salary,
+#       ROW_NUMBER() OVER (PARTITION BY department_id ORDER BY salary DESC) AS rn
+#   FROM 
+#       employees
+# )
+# SELECT 
+#   employee_id, 
+#   department_id, 
+#   salary
+# FROM 
+#   RankedSalaries
+# WHERE 
+#   rn <= 5
+# ORDER BY 
+#   department_id, 
+#   salary DESC;
