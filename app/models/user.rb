@@ -7,4 +7,13 @@ class User < ApplicationRecord
   has_many :movies, through: :liked_movies
   set_association :movies
 
+  enum status: {
+    draft: 0,
+    submitted: 1,
+    rejected: 3,
+    accepted: 4,
+    canceled: 5,
+    published: 6
+  }
+
 end
