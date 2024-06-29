@@ -101,3 +101,49 @@ end
 # ORDER BY 
 #   department_id, 
 #   salary DESC;
+
+
+# WITH Months AS (
+#   SELECT 1 AS month_number UNION
+#   SELECT 2 UNION
+#   SELECT 3 UNION
+#   SELECT 4 UNION
+#   SELECT 5 UNION
+#   SELECT 6 UNION
+#   SELECT 7 UNION
+#   SELECT 8 UNION
+#   SELECT 9 UNION
+#   SELECT 10 UNION
+#   SELECT 11 UNION
+#   SELECT 12
+# ), MonthlySales AS (
+#   SELECT 
+#     EXTRACT(MONTH FROM sales_date) AS month_number,
+#     SUM(sales_amount) AS total_sales
+#   FROM 
+#     sales
+#   WHERE 
+#     EXTRACT(YEAR FROM sales_date) = EXTRACT(YEAR FROM CURRENT_DATE)
+#   GROUP BY 
+#     EXTRACT(MONTH FROM sales_date)
+# )
+# SELECT 
+#   m.month_number,
+#   COALESCE(ms.total_sales, 0) AS total_sales
+# FROM 
+#   Months m
+# LEFT JOIN 
+#   MonthlySales ms 
+# ON 
+#   m.month_number = ms.month_number
+# ORDER BY 
+#   m.month_number;
+
+
+# Products sold across all cities of operations
+# SELECT p.product_name
+# FROM products p
+# JOIN sales s ON p.product_id = s.product_id
+# JOIN cities c ON s.city_id = c.city_id
+# GROUP BY p.product_id, p.product_name
+# HAVING COUNT(DISTINCT c.city_id) = (SELECT COUNT(*) FROM cities);
