@@ -183,3 +183,11 @@ end
 # GROUP BY
 #     Month;
 
+
+# 30 days moving average
+# SELECT department_id, AVG(salary) AS average_salary
+# FROM employees
+# WHERE hire_date <= DATE_SUB(CURRENT_DATE, INTERVAL 2 YEAR)
+# GROUP BY department_id
+# ORDER BY average_salary DESC
+# LIMIT 1;
