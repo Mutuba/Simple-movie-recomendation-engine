@@ -59,7 +59,7 @@ end
 
 # StudentId   Package
 
-# SELECT sd.StudentId AS StudentId, sd.StudentName AS StudentName, fd.FriendId AS FriendId, sf.StudentName AS FriendName FROM StudentDetails sd JOIN FriendDetails fd ON sd.StudentId = fd.StudentId JOIN StudentDetails sf ON sf.StudentId = fd.FrindId JOIN PackageDetails sp ON sp.StudentId = sd.StudentId JOIN PackageDetails fp ON fp.StudentId = fd.FriendId Where fp.Package > sp.Package 
+# SELECT sd.StudentId AS StudentId, sd.StudentName AS StudentName, fd.FriendId AS FriendId, sf.StudentName AS FriendName FROM StudentDetails sd JOIN FriendDetails fd ON sd.StudentId = fd.StudentId JOIN StudentDetails sf ON sf.StudentId = fd.FriendId JOIN PackageDetails sp ON sp.StudentId = sd.StudentId JOIN PackageDetails fp ON fp.StudentId = fd.FriendId Where fp.Package > sp.Package 
 
 # Offer Query
 # SELECT
@@ -72,11 +72,11 @@ end
 # JOIN
 #     FriendDetails fd ON sd.StudentId = fd.StudentId
 # JOIN
-#     StudentDetails sf ON fd.FriendId = sf.StudentId
+#     StudentDetails sf sf.StudentId = ON fd.FriendId
 # JOIN
 #     PackageDetails sp ON sd.StudentId = sp.StudentId
 # JOIN
-#     PackageDetails fp ON fd.FriendId = fp.StudentId
+#     PackageDetails fp ON fp.StudentId = fd.FriendId
 # WHERE
 #     fp.Package > sp.Package;
 
@@ -147,3 +147,27 @@ end
 # JOIN cities c ON s.city_id = c.city_id
 # GROUP BY p.product_id, p.product_name
 # HAVING COUNT(DISTINCT c.city_id) = (SELECT COUNT(*) FROM cities);
+
+# Employees earning more than department average
+
+# WITH departmentAverage AS (
+#   SELECT department_id, AVG(salary) AS department_average
+#   FROM employees
+#   GROUP BY department_id
+# )
+
+# SELECT e.name, e.department_id
+# FROM employees e
+# INNER JOIN departmentAverage da ON e.department_id = da.department_id
+# WHERE e.salary > da.department_average;
+
+
+# SELECT
+#     ProductCategory,
+#     SUM(CASE WHEN Month = 'January' THEN SalesAmount ELSE 0 END) AS January,
+#     SUM(CASE WHEN Month = 'February' THEN SalesAmount ELSE 0 END) AS February,
+#     SUM(CASE WHEN Month = 'March' THEN SalesAmount ELSE 0 END) AS March
+# FROM
+#     SalesData
+# GROUP BY
+#     ProductCategory;
