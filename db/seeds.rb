@@ -171,3 +171,15 @@ end
 #     SalesData
 # GROUP BY
 #     ProductCategory;
+
+
+# SELECT
+#     Month,
+#     SUM(CASE WHEN ProductCategory = 'Electronics' THEN SalesAmount ELSE 0 END) AS Electronics,
+#     SUM(CASE WHEN ProductCategory = 'Clothing' THEN SalesAmount ELSE 0 END) AS Clothing,
+#     ... -- Add more categories as needed
+# FROM
+#     SalesData
+# GROUP BY
+#     Month;
+
