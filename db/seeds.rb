@@ -162,6 +162,7 @@ end
 # WHERE e.salary > da.department_average;
 
 
+# Pivot table examples
 # SELECT
 #     ProductCategory,
 #     SUM(CASE WHEN Month = 'January' THEN SalesAmount ELSE 0 END) AS January,
@@ -184,10 +185,44 @@ end
 #     Month;
 
 
-# 30 days moving average
+# Department with highest average salary for employees more than 2 years
 # SELECT department_id, AVG(salary) AS average_salary
 # FROM employees
 # WHERE hire_date <= DATE_SUB(CURRENT_DATE, INTERVAL 2 YEAR)
 # GROUP BY department_id
 # ORDER BY average_salary DESC
 # LIMIT 1;
+
+
+# Moving Average
+
+# SELECT 
+#     date, 
+#     price, 
+#     AVG(price) OVER (ORDER BY date ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) AS moving_avg
+# FROM 
+#     stock_prices;
+
+# Ranked Orders
+
+# WITH RankedOrders AS (
+#   SELECT
+#     customer_id,
+#     order_id,
+#     order_date,
+#     ROW_NUMBER() OVER (PARTITION BY customer_id ORDER BY order_date DESC) AS order_rank
+#   FROM
+#     orders
+# )
+
+# SELECT
+#   customer_id,
+#   order_id,
+#   order_date
+# FROM
+#   RankedOrders
+# WHERE
+#   order_rank <= 3
+# ORDER BY
+#   customer_id,
+#   order_date DESC;
