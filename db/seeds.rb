@@ -185,7 +185,7 @@ end
 #     Month;
 
 
-# Department with highest average salary for employees more than 2 years
+# Department with highest average salary for employees with atleast 2 years
 # SELECT department_id, AVG(salary) AS average_salary
 # FROM employees
 # WHERE hire_date <= DATE_SUB(CURRENT_DATE, INTERVAL 2 YEAR)
