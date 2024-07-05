@@ -116,7 +116,7 @@ end
 #   SELECT 10 UNION
 #   SELECT 11 UNION
 #   SELECT 12
-# ), MonthlySales AS (
+# ), MonthlySalesForLast12 AS (
 #   SELECT 
 #     EXTRACT(MONTH FROM sales_date) AS month_number,
 #     SUM(sales_amount) AS total_sales
@@ -133,7 +133,7 @@ end
 # FROM 
 #   Months m
 # LEFT JOIN 
-#   MonthlySales ms 
+#   MonthlySalesForLast12 ms 
 # ON 
 #   m.month_number = ms.month_number
 # ORDER BY 
@@ -226,3 +226,19 @@ end
 # ORDER BY
 #   customer_id,
 #   order_date DESC;
+
+
+# WITH EmployeeCount AS (
+# SELECT e.manager_id, COUNT(*) as employee_count FROM employees e group by manager_id
+#)
+
+# Employees earning more than their manager
+# SELECT employee.id employee.salary, manager.id, manager.salary 
+# FROM employees employee JOIN Employees manager on employee.manager_id = manager.id 
+# WHERE employee.salary > manager.salary
+
+# Employee managing samme number of employees as manager
+# SELECT employee.name from employees employee 
+# JOIN EmployeeCount ec on employee.id = ec.manager_id 
+# JOIN EmployeeCount ec2 on employee.manager_id = ec2.manager_id
+# where ec.employee_count =  ec2.employee_count
