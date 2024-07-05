@@ -10,9 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_29_145739) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_05_085004) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "articles", force: :cascade do |t|
+    t.string "long_url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "author_id"
+    t.index ["author_id"], name: "index_articles_on_author_id"
+  end
 
   create_table "liked_movies", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -37,6 +45,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_29_145739) do
     t.integer "status", default: 0
   end
 
+  add_foreign_key "articles", "users", column: "author_id"
   add_foreign_key "liked_movies", "movies"
   add_foreign_key "liked_movies", "users"
 end
