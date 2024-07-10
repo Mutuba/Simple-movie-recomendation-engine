@@ -59,7 +59,10 @@ end
 
 # StudentId   Package
 
-# SELECT sd.StudentId AS StudentId, sd.StudentName AS StudentName, fd.FriendId AS FriendId, sf.StudentName AS FriendName FROM StudentDetails sd JOIN FriendDetails fd ON sd.StudentId = fd.StudentId JOIN StudentDetails sf ON sf.StudentId = fd.FriendId JOIN PackageDetails sp ON sp.StudentId = sd.StudentId JOIN PackageDetails fp ON fp.StudentId = fd.FriendId Where fp.Package > sp.Package 
+# SELECT sd.StudentId AS StudentId, sd.StudentName AS StudentName, fd.FriendId AS FriendId, sf.StudentName AS FriendName 
+# FROM StudentDetails sd JOIN FriendDetails fd 
+# ON sd.StudentId = fd.StudentId JOIN StudentDetails sf ON sf.StudentId = fd.FriendId 
+# JOIN PackageDetails sp ON sp.StudentId = sd.StudentId JOIN PackageDetails fp ON fp.StudentId = fd.FriendId Where fp.Package > sp.Package 
 
 # Offer Query
 # SELECT
