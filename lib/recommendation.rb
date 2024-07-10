@@ -76,11 +76,20 @@ module Recommendation
 
     # Returns an array of instance ids sorted by their weights in the item_recommendations similar to 
     # sorted_recommendations = item_recommendations.sort_by { |key, value| value }.reverse.take(results).to_h.keys
-    sorted_recommendation_ids = item_recommendations.keys.sort_by { |id| item_recommendations[id] }.reverse.take(results)
     
-    # construct table from association_metadata
-    association_table = self.class.reflect_on_association(self.class.association_metadata.reflection_name).klass
+    sorted_recommendation_ids = item_recommendations.keys.sort_by do |id|
+      value = item_recommendations[id]
+      value.is_a?(Float) && value.nan? ? 0 : value
+    end.reverse.take(results)
+    
+    # Construct table from association_metadata
+    association = self.class.reflect_on_association(self.class.association_metadata.reflection_name)
+    association_table = association.klass
+    
     # Fetch the recommendation objects and pair them with their recommendation scores
-    sorted_recommendation_ids.map { |id| [association_table.find(id), item_recommendations[id]] }
+    sorted_recommendation_ids.map do |id|
+      value = item_recommendations[id]
+      [association_table.find(id), value.is_a?(Float) && value.nan? ? 0 : value]
+    end
   end
 end
